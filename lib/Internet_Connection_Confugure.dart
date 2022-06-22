@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-class Wifi_Connection_configure extends StatefulWidget {
-  const Wifi_Connection_configure({Key? key}) : super(key: key);
+class Internet_Connection_configure extends StatefulWidget {
+  const Internet_Connection_configure({Key? key}) : super(key: key);
 
   @override
-  State<Wifi_Connection_configure> createState() =>
-      _Wifi_Connection_configureState();
+  State<Internet_Connection_configure> createState() =>
+      _Internet_Connection_configureState();
 }
 
-class _Wifi_Connection_configureState extends State<Wifi_Connection_configure> {
+class _Internet_Connection_configureState
+    extends State<Internet_Connection_configure> {
   bool? checkConnection = false;
 
   @override
@@ -29,6 +31,23 @@ class _Wifi_Connection_configureState extends State<Wifi_Connection_configure> {
             child: const Text('Check Internet'),
             onPressed: () async {
               checkConnection = await InternetConnectionChecker().hasConnection;
+              checkConnection!
+                  ? await Fluttertoast.showToast(
+                      msg: "Connected",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Color.fromARGB(255, 174, 239, 177),
+                      textColor: Colors.black54,
+                      fontSize: 16.0)
+                  : await Fluttertoast.showToast(
+                      msg: "Disconnected",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Color.fromARGB(255, 239, 185, 174),
+                      textColor: Colors.black54,
+                      fontSize: 16.0);
 
               setState(() {});
               // ignore: avoid_print
